@@ -13,11 +13,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'QR Reader',
       initialRoute: 'home',
-      routes: {
-          'home': ( _ ) => HomePage(),
-          'mapa': ( _ ) => MapaPage()
-       } ,
-      
+      routes: {'home': (_) => HomePage(), 'mapa': (_) => MapaPage()},
+      theme: ThemeData(
+          primaryColor: Colors.deepPurple,
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+              backgroundColor: Colors.deepPurple)),
     );
   }
 }
