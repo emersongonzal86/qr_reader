@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-ScanModel scanModelFromMap(String str) => ScanModel.fromMap(json.decode(str));
+ScanModel scanModelFromJson(String str) => ScanModel.fromJson(json.decode(str));
 
-String scanModelToMap(ScanModel data) => json.encode(data.toMap());
+String scanModelToJson(ScanModel data) => json.encode(data.toJson());
 
 class ScanModel {
   int id;
