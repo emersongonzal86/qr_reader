@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_reader/models/scan_model.dart';
 import 'package:qr_reader/pages/direcciones_page.dart';
 import 'package:qr_reader/pages/mapas_page.dart';
 import 'package:qr_reader/providers/db_provider.dart';
@@ -38,7 +39,10 @@ class _HomePageBody extends StatelessWidget {
     final uiProvider = Provider.of<UiProvider>(context);
 
     //TODO: Temporal leer la base de datos
-    DBProvider.db.database;
+
+    final tempScan = new ScanModel(valor: 'http://google.com');
+    DBProvider.db.nuevoScan(tempScan);
+    
 
     //cambiar para mostrar la pagina respectiva
     final currentIndex = uiProvider.selectedMenuOpt;

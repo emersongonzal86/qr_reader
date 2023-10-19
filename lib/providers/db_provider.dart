@@ -1,8 +1,11 @@
 import 'dart:io';
 
 import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:path_provider/path_provider.dart';
+
+import 'package:qr_reader/models/scan_model.dart';
+export 'package:sqflite/sqflite.dart';
 
 class DBProvider {
   static Database? _database;
@@ -18,7 +21,7 @@ class DBProvider {
   }
 
   Future<Database> initDB() async {
-    //Path de donde almacenaremos la base de datos 
+    //Path de donde almacenaremos la base de datos
     // la ruta fisica en la maquina local es /home/emerson/.cache/Google/AndroidStudio2022.3/device-explorer/Note-10 API 30/data/user/0/com.example.qr_reader/app_flutter
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     final path = join(documentsDirectory.path, 'ScansDB.db');
@@ -36,5 +39,34 @@ class DBProvider {
         )
         ''');
     });
+  }
+
+  // Manera numero uno de como insertar los registros
+  Future<int> nuevoScanRaw(ScanModel nuevoScan) async {
+    final id = nuevoScan.id;
+    final tipo = nuevoScan.tipo;
+    final valor = nuevoScan.valor;
+
+    //verificar la base de datos
+
+    final db = await database;
+
+    final res = await db.rawInsert('''
+
+        INSERT INTO Scans( id, tipo, valor)
+        VALUES ( $id, '$tipo', '$valor')
+''');
+
+    return res;
+  }
+
+  //Manera numero 2 de insertar registros
+
+  Future<int> nuevoScan(ScanModel nuevoScan) async {
+    final db = await database;
+    //toJson inserta todos los datos que enviemos siempre y cuando esten definidos en la tabla
+    final res = await db.insert('Scans', nuevoScan.toJson());
+    print(res);
+    return res;
   }
 }
