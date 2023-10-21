@@ -102,4 +102,11 @@ Future<List<ScanModel>?> getScansPorTipo ( String tipo ) async {
   
 }
 
+
+  Future<int> actualizarScan( ScanModel actualizarScan) async{
+    final db = await database;
+    final res=await db.update('Scans', actualizarScan.toJson(),where: 'id = ?', whereArgs: [actualizarScan.id]);
+    return res;
+  }
+
 }
