@@ -5,7 +5,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:qr_reader/models/scan_model.dart';
-export 'package:sqflite/sqflite.dart';
+export 'package:qr_reader/models/scan_model.dart';
 
 class DBProvider {
   static Database? _database;

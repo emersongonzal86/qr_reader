@@ -43,12 +43,12 @@ class _HomePageBody extends StatelessWidget {
     //DBProvider.db.database;
     //final tempScan = new ScanModel(valor: 'http://proempre.com');
     //DBProvider.db.nuevoScan(tempScan);
-    //DBProvider.db.getScanById(12).then((scan) => print(scan?.valor));
+    //DBProvider.db.getScanById(28).then((scan) => print(scan?.valor));
     //DBProvider.db.getTodosLosScans().then(print);
     // ignore: avoid_print
     //DBProvider.db.deleteAllScans().then(print);
 
-    
+
     //cambiar para mostrar la pagina respectiva
     final currentIndex = uiProvider.selectedMenuOpt;
 
