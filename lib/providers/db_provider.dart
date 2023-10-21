@@ -72,41 +72,46 @@ class DBProvider {
 
 // vamos a obtener informacion SELECT
 
-Future<ScanModel?> getScanById ( int id) async {
-  final db = await database;
-  //los argumentos del whereArgs son posicionales deben ir en el orden del where 
-  final res = await db.query('Scans', where: 'id = ?' , whereArgs: [id]);
-  return res.isNotEmpty
-  ? ScanModel.fromJson(res.first) : null ;
-  
-}
+  Future<ScanModel?> getScanById(int id) async {
+    final db = await database;
+    //los argumentos del whereArgs son posicionales deben ir en el orden del where
+    final res = await db.query('Scans', where: 'id = ?', whereArgs: [id]);
+    return res.isNotEmpty ? ScanModel.fromJson(res.first) : null;
+  }
 
-Future<List<ScanModel>?> getTodosLosScans ( ) async {
-  final db = await database;
-  final res = await db.query('Scans');
-  return res.isNotEmpty
-  ? res.map((s)=> ScanModel.fromJson(s)).toList() 
-  : [] ;
-  
-}
+  Future<List<ScanModel>?> getTodosLosScans() async {
+    final db = await database;
+    final res = await db.query('Scans');
+    return res.isNotEmpty ? res.map((s) => ScanModel.fromJson(s)).toList() : [];
+  }
 
-
-Future<List<ScanModel>?> getScansPorTipo ( String tipo ) async {
-  final db = await database;
-  final res = await db.rawQuery('''
+  Future<List<ScanModel>?> getScansPorTipo(String tipo) async {
+    final db = await database;
+    final res = await db.rawQuery('''
     SELECT * FROM Scans WHERE tipo = '$tipo'
     ''');
-  return res.isNotEmpty
-  ? res.map((s)=> ScanModel.fromJson(s)).toList() 
-  : [] ;
-  
-}
+    return res.isNotEmpty ? res.map((s) => ScanModel.fromJson(s)).toList() : [];
+  }
 
-
-  Future<int> actualizarScan( ScanModel actualizarScan) async{
+  Future<int> actualizarScan(ScanModel actualizarScan) async {
     final db = await database;
-    final res=await db.update('Scans', actualizarScan.toJson(),where: 'id = ?', whereArgs: [actualizarScan.id]);
+    final res = await db.update('Scans', actualizarScan.toJson(),
+        where: 'id = ?', whereArgs: [actualizarScan.id]);
     return res;
   }
 
+  Future<int> deteleScan(int id) async {
+    final db = await database;
+    final res = await db.delete('Scans', where: 'id = ?', whereArgs: [id]);
+    return res;
+  }
+
+  Future<int> deleteAllScans() async {
+    final db = await database;
+    //de esta manera s epuede generar la consulta completa SQL inner join etc
+    final res = await db.rawDelete('''
+      DELETE FROM Scans
+    ''');
+    return res;
+  }
 }
