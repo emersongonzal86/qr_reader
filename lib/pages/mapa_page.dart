@@ -31,6 +31,19 @@ class _MapaPageState extends State<MapaPage> {
         markerId: MarkerId('geo-location'), position: scan.getLatLng()));
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Mapa"),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.location_on),
+              onPressed: () async {
+                final GoogleMapController controller = await _controller.future;
+                controller.animateCamera(CameraUpdate.newCameraPosition(
+                    CameraPosition(
+                        target: scan.getLatLng(), zoom: 17.5, tilt: 45)));
+              })
+        ],
+      ),
       body: GoogleMap(
         mapType: MapType.normal,
         markers: markers,
@@ -39,6 +52,12 @@ class _MapaPageState extends State<MapaPage> {
           _controller.complete(controller);
         },
       ),
+
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.layers),
+        onPressed: () {
+          
+        }),
     );
   }
 }
